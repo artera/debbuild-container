@@ -1,0 +1,37 @@
+#!/bin/bash -e
+
+NAME="$(basename "$0")"
+
+if [ "$NAME" = "podman-debtools" -o "$NAME" = "debtools" ]; then
+    if [ -z "$1" ]; then
+        NAME=bash
+    else
+        NAME="$1"
+        if [ "$NAME" = "setup" ]; then
+            BINDIR="$HOME/.local/bin"
+            DEBTOOLS=$(realpath --relative-to="$BINDIR" "$0")
+            mkdir -p "$BINDIR"
+            cd "$BINDIR"
+            ln -sf "$DEBTOOLS" debtools
+            ln -sf "$DEBTOOLS" dh_make
+            ln -sf "$DEBTOOLS" dpkg
+            exit
+        fi
+        shift
+    fi
+fi
+
+EMAIL=${EMAIL:-$(git config --global user.email)}
+
+podman run -it --rm --net=host \
+    -v "/home/:/home/" \
+    -v "/mnt/:/mnt/" \
+    -e "HOME=$HOME" \
+    -e "USER=$USER" \
+    -e "EMAIL=$EMAIL" \
+    -e "DEBEMAIL=$DEBEMAIL" \
+    -e "DEBFULLNAME=${DEBFULLNAME:-"$(git config --global user.name)"}" \
+    --workdir "$PWD" \
+    --entrypoint "$NAME" \
+    artera/debbuild \
+    "$@"
