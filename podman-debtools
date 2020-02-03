@@ -12,9 +12,9 @@ if [ "$NAME" = "podman-debtools" -o "$NAME" = "debtools" ]; then
             DEBTOOLS=$(realpath --relative-to="$BINDIR" "$0")
             mkdir -p "$BINDIR"
             cd "$BINDIR"
-            ln -sf "$DEBTOOLS" debtools
-            ln -sf "$DEBTOOLS" dh_make
-            ln -sf "$DEBTOOLS" dpkg
+            for bin in debtools dh dh_make dpkg dpkg-{architecture,buildflags,buildpackage,checkbuilddeps,deb,distaddfile,divert,genchanges,gencontrol,gensymbols,maintscript-helper,mergechangelogs,name,parsechangelog,preconfigure,query,reconfigure,scanpackages,scansources,shlibdeps,source,split,statoverride,trigger,vendor}; do
+                ln -sf "$DEBTOOLS" $bin
+            done
             exit
         fi
         shift

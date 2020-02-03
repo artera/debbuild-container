@@ -1,7 +1,7 @@
 FROM debian:jessie-slim
 
 RUN apt-get update && \
-    apt-get install -y git dh-make build-essential autoconf autotools-dev
+    apt-get install -y git dh-make build-essential autoconf autotools-dev cargo
 
 WORKDIR /package
 
