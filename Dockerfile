@@ -8,4 +8,4 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 WORKDIR /package
 
 LABEL RUN="podman run -it --rm --net=host -v pkg:/package/:Z IMAGE"
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "-l", "-c"]
