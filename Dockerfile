@@ -1,7 +1,7 @@
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 
-RUN apt-get update && \
-    apt-get install -y git dh-make build-essential autoconf autotools-dev lsb-release
+RUN apt update && \
+    apt install -y git dh-make build-essential autoconf autotools-dev lsb-release
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y -q --profile minimal
 ENV PATH="/root/.cargo/bin:${PATH}"
 
