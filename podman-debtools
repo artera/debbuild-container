@@ -33,5 +33,5 @@ podman run -it --rm --net=host \
     -e "DEBFULLNAME=${DEBFULLNAME:-"$(git config --global user.name)"}" \
     --workdir "$PWD" \
     --entrypoint "$NAME" \
-    artera/debbuild \
+    artera/debbuild:${DEBTOOLSREL:-latest} \
     "$@"
